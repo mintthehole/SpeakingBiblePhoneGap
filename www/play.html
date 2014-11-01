@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact Example</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery-2.1.0.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for PhoneGap to load
+    //
+
+    $(document).on('pageinit', ".normal",function() {
+      $('p').append("<strong>HEllO</strong>");
+    });
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+
+    // Query the database
+    //
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM DEMO1 where id = 1', [], querySuccess, errorCB);
+    }
+
+    // Query the success callback
+    //
+    function querySuccess(tx, results) {
+        var len = results.rows.length;
+        for (var i=0; i<len; i++){
+            $("#pollo").append("<h2>" + results.rows.item(i).title +"</h2>");
+            $("#pollo").append("<br/>");
+            $("#pollo").append("<audio controls><source src='"+results.rows.item(i).url+"' type='audio/mpeg'></audio>");
+        }
+    }
+
+    // Transaction error callback
+    //
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+        var db = window.openDatabase("Database", "1.0", "PhoneGap Demo1", 200000);
+        db.transaction(queryDB, errorCB);
+    }
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Example</h1>
+      <div class="well">
+        <p id="pollo">Play</p>
+      </div>
+    </div>
+
+  </body>
+</html>
