@@ -1,31 +1,41 @@
 // create and Populate the database
 function populateDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS BOOKS (id unique, s_title,title)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS CHAPTERS (id unique,book_s_title,chapter_no,url)');
 }
 
-// Query the database
-function queryDB(tx) {
-    tx.executeSql('SELECT * FROM BOOKS', [], querySuccess, errorCB);
+function createBooks(tx) {
+    tx.executeSql('SELECT * FROM BOOKS', [], querySuccessBooks, errorCB);
 }
 
-// Query the success callback and populate db to table
-function querySuccess(tx, results) {
+function createChapters(tx) {
+    alert("pollo");
+    tx.executeSql('SELECT * FROM CHAPTERS', [], querySuccessChapters, errorCB);
+}
+
+
+
+
+function querySuccessChapters(tx, results) {
     var len = results.rows.length;
     if (len == 0)
     {
+
+        create_chapters(tx);
+    }
+}
+
+function querySuccessBooks(tx, results) {
+
+    var len = results.rows.length;
+    if (len == 0)
+    {
+
         create_books(tx);
     }
-    else{
-    }
-    // $("#pollo").append("<h3>");
-    // for (var i=0; i<len; i++){
-
-    //     $("#pollo").append("<a href='play.html?id=" + results.rows.item(i).id + "'>"+ results.rows.item(i).title +"</a>");
-    //     $("#pollo").append("<br/>");
-
-    // }
-    // $("#pollo").append("</h3>");
+    createChapters(tx);
 }
+
 
 // Transaction error callback
 function errorCB(err) {
@@ -35,7 +45,7 @@ function errorCB(err) {
 // Transaction success callback
 function successCB() {
     var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
-    db.transaction(queryDB, errorCB);
+    db.transaction(createBooks, errorCB);
     // alert("success");
 
 }
