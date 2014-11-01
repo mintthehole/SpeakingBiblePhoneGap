@@ -21,7 +21,6 @@
 		<!-- Ends Custom code  -->
 		<script type="text/javascript" charset="utf-8">
 			function playSound(id){
-				alert("hi");
 				var no = (id < 10 ? "0" : "") + id;
 				playAudio("/android_asset/www/sound/ENG/b"+no+".mp3");
 			}
@@ -41,7 +40,6 @@
 		           html += '<div class="col-md-12 col-sm-4 col-xs-4 button-bg1 ad" id="b0'+results.rows.item(i).id+'" onclick="playSound('+results.rows.item(i).id+');"><h6>'+ results.rows.item(i).s_title +'</h6></div>';
 
 		        }
-		        alert(html);
 		        $('.books-list').html(html);
 		    }
 
