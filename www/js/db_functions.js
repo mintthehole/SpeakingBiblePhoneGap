@@ -2,7 +2,6 @@
 function populateDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS BOOKS (id unique, s_title,title)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS CHAPTERS (id unique,book_s_title,chapter_no,url)');
-    tx.executeSql('DROP TABLE VERSES');
     tx.executeSql('CREATE TABLE IF NOT EXISTS VERSES (order_no,book_s_title,verse_no,verse_start,chapter_text,verse_text,chapter_no,book,paragraph)');
 }
 
@@ -23,7 +22,6 @@ function querySuccessVerses(tx, results) {
     if (len == 0)
     {
         verseCreation(tx);
-        alert("Done");
     }
 
 }
