@@ -1,6 +1,7 @@
 // create and Populate the database
 function populateDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS BOOKS (id unique, s_title,title)');
+    tx.executeSql('DROP TABLE CHAPTERS');
     tx.executeSql('CREATE TABLE IF NOT EXISTS CHAPTERS (id unique,book_s_title,chapter_no,url)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS VERSES (order_no,book_s_title,verse_no,verse_start,chapter_text,verse_text,chapter_no,book,paragraph)');
 }

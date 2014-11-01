@@ -4,13 +4,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Book List</title>
-
+    <script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/audio.js"></script>
     <!-- Bootstrap includes starts here -->
     <link href="bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
 	<!-- Font awesome starts here -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -19,43 +19,41 @@
 	<!-- Custom code starts here -->
     <link href="css/style.css" rel="stylesheet">
 		<!-- Ends Custom code  -->
+		<script type="text/javascript" charset="utf-8">
+			function playSound(id){
+				var no = (id < 10 ? "0" : "") + id;
+				playAudio("/android_asset/www/sound/ENG/b"+no+".mp3");
+			}
+		    document.addEventListener("deviceready", onDeviceReady, false);
+		    // PhoneGap is ready
 
-		<script>
-		$(document).ready(function(){
+		    function queryDB(tx) {
+		        tx.executeSql('SELECT * FROM BOOKS', [], querySuccess, errorCB);
+		    }
 
+		    // Query the success callback
+		    //
+		    function querySuccess(tx, results) {
+		        var len = results.rows.length;
+		        var html = '';
+		        for (var i=0; i<len; i++){
+		           html += '<div class="col-md-12 col-sm-4 col-xs-4 button-bg1 ad" id="b0'+results.rows.item(i).id+'" onclick="playSound('+results.rows.item(i).id+');"><h6>'+ results.rows.item(i).s_title +'</h6></div>';
 
-//for reading the id
-		  $('.ad').click(function() {
-		      var id = $(this).attr('id');
-		      //alert(id);
-		      //play audio
-		       var audioElement = document.createElement('audio');
-			          audioElement.setAttribute('src', 'sound/'+id+'.mp3');
-			          audioElement.setAttribute('autoplay', 'autoplay');
-			          //audioElement.load()
-			          $.get();
-			          audioElement.addEventListener("load", function() {
-			          audioElement.play();
-        }, true);
-        audioElement.play();
+		        }
+		        $('.books-list').html(html);
+		    }
 
-		      //END to play audio
-		     // $container.cycle(id.replace('pager_', ''));
-		      return false;
-		});
-    //END for reading the id
-    alert('c');
-		$('.ad').click(function() {
-		//alert('d');
-			var id = $(this).attr('id');
-			//alert(id);
-			$('select[name="bookslist"] option[value='+id+']').attr("selected","selected");
-			//$('select[name="bookslist"] option:selected').attr("selected",null);
-			//$("select[name="bookslist").selectmenu('refresh');
-		});
+		    // Transaction error callback
+		    //
+		    function errorCB(err) {
+		        alert("Error processing SQL: "+err.code);
+		    }
 
+		    function onDeviceReady() {
+		        var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+		        db.transaction(queryDB, errorCB);
+		    }
 
-}); //End document
 		</script>
 		<style>
 		.highlight{
@@ -105,43 +103,7 @@
 			</select></center><!--Ends Drop Downs  -->
 			</div>
     <div class="col-md-4 col-xs-12   col-md-offset-4 main-panel books-list">
-
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1 ad" id="b01"><h6>Mat </h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1 ad" id="b02"><h6>Mark</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1 ad" id="b03"><h6 >Luke</h6>
-		</div>
-
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1 b04"><h6>John</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>Acts</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>Rom</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>ICor</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>IICor</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>Mat </h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>Mark</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6 >Luke</h6>
-		</div>
-
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>John</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>Acts</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>Rom</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>ICor</h6>
-		</div>
-		<div class="col-md-12 col-sm-4 col-xs-4 button-bg1"><h6>IICor</h6>
-		</div>
-
-
+    <div class='col-md-12 col-sm-4 col-xs-4 button-bg1 ad' id='b01'><h6>MATT</h6></div>
 
 		</div>
 
@@ -149,9 +111,7 @@
 
 	<!--ENDS play-controls -->
 </div><!--ENDS Container-->
-<footer>
-	<center>&copy;Copy right</center>
-</footer>
+
 
 </body>
 </html>
